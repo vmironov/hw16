@@ -1,0 +1,421 @@
+{
+	"info": {
+		"_postman_id": "210b7ebc-f181-413f-89b0-8687f6e5696c",
+		"name": "HW16",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28838428"
+	},
+	"item": [
+		{
+			"name": "01. Регистрация пользователя №1",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"user_1\",\n    \"firstName\":\"Aleksey\",\n    \"lastName\": \"Pushkin\",\n    \"email\": \"aaaa@ppppp.ru\",\n    \"phone\": \"+7999999991\",\n    \"password\": \"pass_1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/api/v1/user",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "02. Проверка, что получение профиля недоступно без авторизации",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/user/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"1"
+					]
+				},
+				"description": "Returns a user based on a single ID, if the user does not have access to the user"
+			},
+			"response": []
+		},
+		{
+			"name": "03. Проверка, что изменение профиля недоступно без авторизации",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"ivanivanov\",\n  \"firstName\": \"Ivan\",\n  \"lastName\": \"Ivanon\",\n  \"email\": \"ivan@ivanov.com\",\n  \"phone\": \"+799999991\",\n  \"password\": \"pass1\"\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/user/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"1"
+					]
+				},
+				"description": "Update user with User ID supplied"
+			},
+			"response": []
+		},
+		{
+			"name": "04. Авторизация и получение профиля пользователя №1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(pm.response.json())",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "pass_1",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user_1",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/user/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"1"
+					]
+				},
+				"description": "Returns a user based on a single ID, if the user does not have access to the user"
+			},
+			"response": []
+		},
+		{
+			"name": "05. Авторизация и изменение пользователя №1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(pm.response.json())",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "pass_1",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user_1",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"user_1\",\n  \"firstName\": \"Ivan\",\n  \"lastName\": \"Ivanon\",\n  \"email\": \"ivan@ivanov.com\",\n  \"phone\": \"+799999991\",\n  \"password\": \"pass_1\"\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/user/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"1"
+					]
+				},
+				"description": "Update user with User ID supplied"
+			},
+			"response": []
+		},
+		{
+			"name": "06. Авторизация и получение измененного профиля пользователя №1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(pm.response.json())",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "pass_1",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user_1",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/user/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"1"
+					]
+				},
+				"description": "Returns a user based on a single ID, if the user does not have access to the user"
+			},
+			"response": []
+		},
+		{
+			"name": "07. Регистрация пользователя №2",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"user_2\",\n    \"firstName\":\"Ivan\",\n    \"lastName\": \"Turgenev\",\n    \"email\": \"iiiiii@tttttt.ru\",\n    \"phone\": \"+7999999992\",\n    \"password\": \"pass_2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/api/v1/user",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "08. Авторизация и получение профиля пользователя №1 - проверка, что пользователь2 не имеет доступа на чтение",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "pass_2",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user_2",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/user/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"1"
+					]
+				},
+				"description": "Returns a user based on a single ID, if the user does not have access to the user"
+			},
+			"response": []
+		},
+		{
+			"name": "09. Авторизация и изменение пользователя №1 - проверка, что пользователь2 не имеет доступа на редактирование",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "pass_2",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user_2",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"ivanivanov\",\n  \"firstName\": \"Ivan\",\n  \"lastName\": \"Ivanon\",\n  \"email\": \"ivan@ivanov.com\",\n  \"phone\": \"+799999991\",\n  \"password\": \"pass1\"\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/user/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"1"
+					]
+				},
+				"description": "Update user with User ID supplied"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "arch.homework"
+		}
+	]
+}

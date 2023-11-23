@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+      nginx.ingress.kubernetes.io/auth-url: http://auth-service.{{ .Values.namespace }}.svc.cluster.local:80/auth
+            
+  name: web-ingress
+  namespace: {{ .Values.namespace }}
+  labels:
+    name: web
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: arch.homework
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/api/v1/user"
+        backend:
+          service:
+            name: web-service
+            port:
+              number: 80
+
+
+
+
+
